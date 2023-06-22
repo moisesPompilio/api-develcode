@@ -1,0 +1,38 @@
+version: '3'
+
+services:
+  app:
+    container_name: api_develcode
+    restart: always
+    build: .
+    depends_on:
+      - database
+    environment:
+      - spring.datasource.url=jdbc:postgresql://database:5432/develcode
+      - spring.datasource.username=develcode
+      - spring.datasource.password=develcode
+      - spring.jpa.hibernate.ddl-auto=update
+    ports:
+      - 3000:8080
+  database:
+    container_name: database_develcode
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_DB: develcode
+      POSTGRES_USER: develcode
+      POSTGRES_PASSWORD: develcode
+    ports:
+    - 5433:5432
+    volumes:
+      - db_data:/var/lib/postgresql/database_develcode
+  redis:
+    image: redis
+    restart: always
+    ports:
+      - "6379:6379"
+  
+
+volumes:
+  db_data:
+    driver: local
