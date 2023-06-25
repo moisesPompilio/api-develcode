@@ -1,28 +1,31 @@
 package com.api.Develcode.modules.user.domain.usecase;
 
-import java.util.Optional;
 import java.util.UUID;
 
-import com.api.Develcode.modules.user.adapter.repository.UserRepository;
+import com.api.Develcode.modules.user.application.model.input.UserInputModel;
 import com.api.Develcode.modules.user.application.model.mapper.UserMapperModel;
 import com.api.Develcode.modules.user.application.model.output.UserOutputModel;
-import com.api.Develcode.modules.user.domain.entity.UserEntity;
+import com.api.Develcode.modules.user.domain.entity.User;
+import com.api.Develcode.shared.exception.EntityNotFoundException;
+import com.api.Develcode.shared.exception.InvalidIdException;
+import com.api.Develcode.shared.generic.repository.GenericRepository;
+import com.api.Develcode.shared.generic.usecase.GenericUseCase;
 
-import lombok.RequiredArgsConstructor;
 
-@RequiredArgsConstructor
-public class GetByIdUserUseCase {
-    private UserRepository userRepository;
-    private final UserMapperModel mapper;
-
-    public GetByIdUserUseCase(UserRepository userRepository) {
-        this.userRepository = userRepository;
-        this.mapper = new UserMapperModel();
+public class GetByIdUserUseCase extends GenericUseCase<User, UserInputModel, UserOutputModel> {
+    public GetByIdUserUseCase(GenericRepository<User, UUID> repositorio) {
+        super(new UserMapperModel(), repositorio);
     }
 
-    public UserOutputModel execute(String idString) {
-        UUID id = UUID.fromString(idString);
-        Optional<UserEntity> user = userRepository.findById(id);
-        return mapper.toOutput(user.get());
+    public User execute(String idString) {
+        try {
+            UUID id = UUID.fromString(idString);
+            User user = this.repositorio.findById(id)
+                    .orElseThrow(() -> new EntityNotFoundException(idString));
+            return user;
+
+        } catch (IllegalArgumentException ex) {
+            throw new InvalidIdException(idString);
+        }
     }
 }
