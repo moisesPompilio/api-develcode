@@ -11,7 +11,6 @@ import com.api.Develcode.modules.user.application.model.output.UserOutputModel;
 import com.api.Develcode.modules.user.domain.usecase.CreateUserUseCase;
 import com.api.Develcode.modules.user.domain.usecase.DeleteByIdUserUseCase;
 import com.api.Develcode.modules.user.domain.usecase.GetAllUserUseCase;
-import com.api.Develcode.modules.user.domain.usecase.GetByIdUserUseCase;
 import com.api.Develcode.modules.user.domain.usecase.UpdateByIdUserUseCase;
 
 import lombok.RequiredArgsConstructor;
@@ -36,13 +35,7 @@ public class UserService {
         GetAllUserUseCase getAllUserUseCase = new GetAllUserUseCase(repository);
         return getAllUserUseCase.execute();
     }
-    
-    public UserOutputModel GetByIdUserService(String id) {
-        GetByIdUserUseCase getAllUserUseCase = new GetByIdUserUseCase(repository);
-        return getAllUserUseCase.execute(id);
-    }
-
-    public void UpdateByIdUserService(String id, UserInputModel userInputModel){
+    public void UpdateByIdUserService(String id, UserInputModel userInputModel) {
         UpdateByIdUserUseCase updateByIdUserUseCase = new UpdateByIdUserUseCase(repository);
         updateByIdUserUseCase.execute(id, userInputModel);
     }
