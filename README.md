@@ -35,6 +35,8 @@ Dentro da pasta Modules, temos três subpastas: Domain (responsável por gerir a
 
 A pasta Domain abriga os casos de uso (Use Cases), que são as regras de negócio específicas da aplicação. Cada caso de uso é responsável por uma funcionalidade ou operação do sistema, definindo as ações a serem executadas nas entidades e manipulando os dados de acordo com a lógica de negócio.
 
+A entidade "User" é a entidade do sistema e possui os seguintes atributos: Id (código), nome, foto (link para a foto) e data de nascimento.
+
 A arquitetura do projeto segue os princípios da clean architecture e hexagonal, buscando separar as camadas de forma que cada uma não precise saber o que ocorre nas outras. Isso permite maior flexibilidade, testabilidade e manutenibilidade do código. Além disso, o projeto adota boas práticas de desenvolvimento, como Clean Code e os princípios SOLID.
 
 ## :sparkles: Features ##
